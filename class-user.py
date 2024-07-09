@@ -27,5 +27,47 @@ class User:
               f"Phone Number: {self.phone_number}\n"
               f"Friends: {', '.join(f'{friend.name} (ID: {friend.id})' for friend in self.list_friends)}") 
              #this function does not work
-             
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LL:
+    def __init__(self):
+        self.head = None
+        self.size = 0
+
+    def addNode(self, data):
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
+        self.size += 1
+
+    def displayNodes(self, name):
+        nodes = []
+        temp = self.head
+        while temp:
+            nodes.append((temp.data, name[temp.data]))
+            temp = temp.next
+        return nodes
+
+    def removeNode(self, target):
+        current = self.head
+        prev = None
+        while current is not None:
+            if current.data == target:
+                if prev:
+                    prev.next = current.next
+                else:
+                    self.head = current.next
+                self.size -= 1
+                return True
+            prev = current
+            current = current.next
+        return False   
+class Graph:
+    def __init__(self):
+        self.AL = {}
+        self.name = {}
+        self.next_id = 1      
 
