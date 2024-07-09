@@ -19,5 +19,13 @@ class User:
             self.list_friends = [friend for friend in self.list_friends if friend.id != user.id]
         else:
             print("The user already is not your friend!")
-
+    def displayProfile(self):
+        print(f"ID: {self.id}\n"
+              f"Name: {self.name}\n"
+              f"Age: {self.age}\n"
+              f"Email: {self.email}\n"
+              f"Phone Number: {self.phone_number}\n"
+              f"Friends: {', '.join(f'{friend.name} (ID: {friend.id})' for friend in self.list_friends)}") 
+             #this function does not work
+             
 
