@@ -78,5 +78,17 @@ class Graph:
             self.next_id += 1
             return f"{user.name} (ID: {user.id}) has been added!"
         else:
-            return f"{user.name} (ID: {user.id}) already exists!"       
+            return f"{user.name} (ID: {user.id}) already exists!" 
+    def removeVertex(self, id):
+        if id in self.AL:
+            # Remove the user from all adjacency lists
+            for key in self.AL:
+                self.AL[key].removeNode(id)
+            del self.AL[id]
+            del self.name[id]
+            return f"User with ID {id} has been removed!"
+        else:
+            return f"User with ID {id} does not exist!"
+
+          
 
