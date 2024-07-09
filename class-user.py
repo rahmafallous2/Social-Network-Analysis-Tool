@@ -14,4 +14,10 @@ class User:
             self.list_friends.append(user)
         else:
             print("The user already is your friend!")
+    def removeUser(self, user):
+        if user.id in [friend.id for friend in self.list_friends]:
+            self.list_friends = [friend for friend in self.list_friends if friend.id != user.id]
+        else:
+            print("The user already is not your friend!")
+
 
