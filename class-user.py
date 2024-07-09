@@ -89,6 +89,24 @@ class Graph:
             return f"User with ID {id} has been removed!"
         else:
             return f"User with ID {id} does not exist!"
+    def addRelation(self, id1, id2, relation):
+        if id1 in self.AL and id2 in self.AL:
+            if relation == "Follow":
+                self.AL[id1].addNode(id2)
+                print(self.name[id1] + " followed " + self.name[id2] + "!")
+            elif relation == "Unfollow":
+                self.AL[id1].removeNode(id2)
+                print(self.name[id1] + " unfollowed " + self.name[id2] + "!")
+            else:
+                self.AL[id1].addNode(id2)
+                self.AL[id2].addNode(id1)
+                print("Friendship established between " + self.name[id1] + " and " + self.name[id2] + "!")
+        elif id1 not in self.AL and id2 not in self.AL:
+            print("Invalid users", id1, "and", id2, "\n")
+        elif id1 not in self.AL:
+            print("Invalid user", id1, "\n")
+        else:
+            print("Invalid user", id2, "\n")
 
           
 
