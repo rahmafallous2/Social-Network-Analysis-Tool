@@ -69,5 +69,14 @@ class Graph:
     def __init__(self):
         self.AL = {}
         self.name = {}
-        self.next_id = 1      
+        self.next_id = 1   
+    def addVertex(self, name):
+        user = User(self.next_id, name, None, None, None, [])
+        if user.id not in self.AL:
+            self.AL[user.id] = LL()
+            self.name[user.id] = user.name
+            self.next_id += 1
+            return f"{user.name} (ID: {user.id}) has been added!"
+        else:
+            return f"{user.name} (ID: {user.id}) already exists!"       
 
