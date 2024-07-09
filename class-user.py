@@ -107,6 +107,14 @@ class Graph:
             print("Invalid user", id1, "\n")
         else:
             print("Invalid user", id2, "\n")
+    def displayGraph(self):
+        if not self.AL:
+            print("Graph is empty!\n")
+            return
+        for user in self.AL:
+            print(self.name[user] + ":", end=" ")
+            nodes = self.AL[user].displayNodes(self.name)
+            print(", ".join([f"{name} (ID: {id})" for id, name in nodes]))
 
           
 
