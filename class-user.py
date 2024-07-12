@@ -232,4 +232,36 @@ class Graph:
         theSeq[right] = temp
         return right
 
+    def mergeSort(self, seq):
+        self.mergeSortRecursively(seq, 0, len(seq))
 
+    def mergeSortRecursively(self, seq, first, last):
+        if first < last - 1:
+            mid = (first + last) // 2
+            self.mergeSortRecursively(seq, first, mid)
+            self.mergeSortRecursively(seq, mid, last)
+            self.merge(seq, first, mid, last)
+
+    def merge(self, seq, first, mid, last):
+        temp = []
+        i = first
+        j = mid
+
+        while i < mid and j < last:
+            if seq[i] < seq[j]:
+                temp.append(seq[i])
+                i += 1
+            else:
+                temp.append(seq[j])
+                j += 1
+
+        while i < mid:
+            temp.append(seq[i])
+            i += 1
+
+        while j < last:
+            temp.append(seq[j])
+            j += 1
+
+        for k in range(len(temp)):
+            seq[first + k] = temp[k]
