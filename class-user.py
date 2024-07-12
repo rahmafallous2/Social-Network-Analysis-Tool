@@ -176,7 +176,18 @@ class Graph:
                     dist[neighbor_id] = distance
 
         return dist
-    
+    def connectedComponents(self):
+        visited = {key: False for key in self.AL}
+        cc = []
+
+        for v in self.AL:
+            if not visited[v]:
+                temp = []
+                self.DFSUtil(v, visited, temp)
+                cc.append(temp)
+
+        return cc
+ 
         
 
           
