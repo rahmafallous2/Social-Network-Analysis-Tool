@@ -3,7 +3,6 @@
 # I chose adjacency list for sparse graph representation due to the efficiency in memory usage and traversal speed, ideal for graphs with relatively few edges compared to maximum possible connections between users.
 from collections import deque
 
-
 class User:
     def __init__(self, id, name, age, email, phone_number, list_friends):
         self.id = id
@@ -12,25 +11,27 @@ class User:
         self.email = email
         self.phone_number = phone_number
         self.list_friends = list_friends
+
     def addUser(self, user):
         if user.id not in [friend.id for friend in self.list_friends]:
             self.list_friends.append(user)
         else:
-            print("The user already is your friend!")
+            print("The user is already your friend!")
+
     def removeUser(self, user):
         if user.id in [friend.id for friend in self.list_friends]:
             self.list_friends = [friend for friend in self.list_friends if friend.id != user.id]
         else:
-            print("The user already is not your friend!")
+            print("The user is not your friend!")
+
     def displayProfile(self):
         print(f"ID: {self.id}\n"
               f"Name: {self.name}\n"
               f"Age: {self.age}\n"
               f"Email: {self.email}\n"
               f"Phone Number: {self.phone_number}\n"
-              f"Friends: {', '.join(f'{friend.name} (ID: {friend.id})' for friend in self.list_friends)}") 
-             #this function does not work
-    #Enable users to update their profiles with information such as interests, posts, etc.
+              f"Friends: {', '.join(f'{friend.name} (ID: {friend.id})' for friend in self.list_friends)}")
+
 class Node:
     def __init__(self, data):
         self.data = data
@@ -68,12 +69,14 @@ class LL:
                 return True
             prev = current
             current = current.next
-        return False   
+        return False
+
 class Graph:
     def __init__(self):
         self.AL = {}
         self.name = {}
-        self.next_id = 1   
+        self.next_id = 1
+
     def addVertex(self, name):
         user = User(self.next_id, name, None, None, None, [])
         if user.id not in self.AL:
@@ -82,7 +85,8 @@ class Graph:
             self.next_id += 1
             return f"{user.name} (ID: {user.id}) has been added!"
         else:
-            return f"{user.name} (ID: {user.id}) already exists!" 
+            return f"{user.name} (ID: {user.id}) already exists!"
+
     def removeVertex(self, id):
         if id in self.AL:
             # Remove the user from all adjacency lists
@@ -93,6 +97,7 @@ class Graph:
             return f"User with ID {id} has been removed!"
         else:
             return f"User with ID {id} does not exist!"
+
     def addRelation(self, id1, id2, relation):
         if id1 in self.AL and id2 in self.AL:
             if relation == "Follow":
@@ -111,6 +116,7 @@ class Graph:
             print("Invalid user", id1, "\n")
         else:
             print("Invalid user", id2, "\n")
+
     def displayGraph(self):
         if not self.AL:
             print("Graph is empty!\n")
@@ -119,6 +125,7 @@ class Graph:
             print(self.name[user] + ":", end=" ")
             nodes = self.AL[user].displayNodes(self.name)
             print(", ".join([f"{name} (ID: {id})" for id, name in nodes]))
+
     def BFS(self, starting_vertex):
         visited = [False] * (max(self.AL) + 1)
         queue = deque([starting_vertex])
@@ -134,6 +141,7 @@ class Graph:
                     queue.append(neighbor)
                     visited[neighbor] = True
         print()
+
     def DFSUtil(self, v, visited):
         visited.add(v)
         print(self.name[v], end=" ")
@@ -147,6 +155,7 @@ class Graph:
         visited = set()
         self.DFSUtil(v, visited)
         print()
+
     def dijkstra(self, src):
         if src not in self.AL:
             print(f"Vertex {src} not found in the graph.")
@@ -176,6 +185,7 @@ class Graph:
                     dist[neighbor_id] = distance
 
         return dist
+
     def connectedComponents(self):
         visited = {key: False for key in self.AL}
         cc = []
@@ -187,8 +197,39 @@ class Graph:
                 cc.append(temp)
 
         return cc
- 
-        
 
-          
+    def quickSort(self, theSeq):
+        self.recQuickSort(theSeq, 0, len(theSeq) - 1)
+
+    def recQuickSort(self, theSeq, first, last):
+        if first < last:
+            # Partition the sequence and obtain the pivot position
+            pivot = self.partitionSeq(theSeq, first, last)
+            # Recursively sort the two subsequences
+            self.recQuickSort(theSeq, first, pivot - 1)
+            self.recQuickSort(theSeq, pivot + 1, last)
+
+    def partitionSeq(self, theSeq, first, last):
+        pivot = theSeq[first]
+        left = first + 1
+        right = last
+        done = False
+        while not done:
+            while left <= right and theSeq[left] <= pivot:
+                left = left + 1
+            while theSeq[right] >= pivot and right >= left:
+                right = right - 1
+            if right < left:
+                done = True
+            else:
+                # Swap the elements
+                temp = theSeq[first]
+                theSeq[first] = theSeq[right]
+                theSeq[right] = temp
+        # Swap the pivot element with the right element
+        temp = theSeq[first]
+        theSeq[first] = theSeq[right]
+        theSeq[right] = temp
+        return right
+
 
