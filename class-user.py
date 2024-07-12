@@ -147,8 +147,36 @@ class Graph:
         visited = set()
         self.DFSUtil(v, visited)
         print()
+    def dijkstra(self, src):
+        if src not in self.AL:
+            print(f"Vertex {src} not found in the graph.")
+            return
 
+        dist = {vertex_id: float('inf') for vertex_id in self.AL}
+        dist[src] = 0
+        visited = set()
 
+        while len(visited) < len(self.AL):
+            min_dist = float('inf')
+            min_vertex = None
+
+            for vertex_id in dist:
+                if vertex_id not in visited and dist[vertex_id] < min_dist:
+                    min_dist = dist[vertex_id]
+                    min_vertex = vertex_id
+
+            if min_vertex is None:
+                break
+
+            visited.add(min_vertex)
+
+            for neighbor_id, _ in self.AL[min_vertex].displayNodes(self.name):
+                distance = dist[min_vertex] + 1  # Assuming unweighted graph, each edge has distance 1
+                if distance < dist[neighbor_id]:
+                    dist[neighbor_id] = distance
+
+        return dist
+    
         
 
           
