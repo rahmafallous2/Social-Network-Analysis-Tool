@@ -134,7 +134,19 @@ class Graph:
                     queue.append(neighbor)
                     visited[neighbor] = True
         print()
+    def DFSUtil(self, v, visited):
+        visited.add(v)
+        print(self.name[v], end=" ")
 
+        nodes = self.AL[v].displayNodes(self.name)
+        for neighbor, _ in nodes:
+            if neighbor not in visited:
+                self.DFSUtil(neighbor, visited)
+
+    def DFS(self, v):
+        visited = set()
+        self.DFSUtil(v, visited)
+        print()
 
 
         
