@@ -1,6 +1,9 @@
 #Social Network Analysis Tool Project
 #1. Graph Representation:
 # I chose adjacency list for sparse graph representation due to the efficiency in memory usage and traversal speed, ideal for graphs with relatively few edges compared to maximum possible connections between users.
+from collections import deque
+
+
 class User:
     def __init__(self, id, name, age, email, phone_number, list_friends):
         self.id = id
@@ -27,6 +30,7 @@ class User:
               f"Phone Number: {self.phone_number}\n"
               f"Friends: {', '.join(f'{friend.name} (ID: {friend.id})' for friend in self.list_friends)}") 
              #this function does not work
+    #Enable users to update their profiles with information such as interests, posts, etc.
 class Node:
     def __init__(self, data):
         self.data = data
@@ -115,6 +119,25 @@ class Graph:
             print(self.name[user] + ":", end=" ")
             nodes = self.AL[user].displayNodes(self.name)
             print(", ".join([f"{name} (ID: {id})" for id, name in nodes]))
+    def BFS(self, starting_vertex):
+        visited = [False] * (max(self.AL) + 1)
+        queue = deque([starting_vertex])
+        visited[starting_vertex] = True
+
+        while queue:
+            vertex = queue.popleft()
+            print(self.name[vertex], end=" ")
+
+            nodes = self.AL[vertex].displayNodes(self.name)
+            for neighbor, _ in nodes:
+                if not visited[neighbor]:
+                    queue.append(neighbor)
+                    visited[neighbor] = True
+        print()
+
+
+
+        
 
           
 
